@@ -26,5 +26,9 @@ namespace HastaneRandevuEFCF_Entities
 
         public virtual List<RandevuBilgileri> RandevuBilgileriList { get; set; }
 
+        public override string ToString()
+        {
+            return $"{this.TCNo} - {this.HastaAdi} {this.HastaSoyadi}";
+        }
     }
 }

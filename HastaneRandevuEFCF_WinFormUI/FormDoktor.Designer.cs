@@ -60,7 +60,7 @@ namespace HastaneRandevuEFCF_WinFormUI
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(789, 532);
+            this.tabControl1.Size = new System.Drawing.Size(1043, 639);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPageListele
@@ -69,7 +69,7 @@ namespace HastaneRandevuEFCF_WinFormUI
             this.tabPageListele.Location = new System.Drawing.Point(4, 25);
             this.tabPageListele.Name = "tabPageListele";
             this.tabPageListele.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageListele.Size = new System.Drawing.Size(781, 503);
+            this.tabPageListele.Size = new System.Drawing.Size(1035, 610);
             this.tabPageListele.TabIndex = 0;
             this.tabPageListele.Text = "Dr Listesi";
             this.tabPageListele.UseVisualStyleBackColor = true;
@@ -84,7 +84,7 @@ namespace HastaneRandevuEFCF_WinFormUI
             this.dataGridViewDoktor.ReadOnly = true;
             this.dataGridViewDoktor.RowHeadersWidth = 51;
             this.dataGridViewDoktor.RowTemplate.Height = 24;
-            this.dataGridViewDoktor.Size = new System.Drawing.Size(1031, 607);
+            this.dataGridViewDoktor.Size = new System.Drawing.Size(1015, 577);
             this.dataGridViewDoktor.TabIndex = 0;
             // 
             // tabPageDrEkle
@@ -223,7 +223,7 @@ namespace HastaneRandevuEFCF_WinFormUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(789, 532);
+            this.ClientSize = new System.Drawing.Size(1043, 639);
             this.Controls.Add(this.tabControl1);
             this.Name = "FormDoktor";
             this.Text = "DOKTOR İŞLEMLERİ FORMU";

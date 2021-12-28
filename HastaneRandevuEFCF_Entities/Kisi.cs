@@ -10,10 +10,10 @@ namespace HastaneRandevuEFCF_Entities
    public abstract class Kisi
     {
         [Required]
-        [StringLength(11)]
+        [StringLength(11, ErrorMessage ="Tc kimlik 11 haneli olmalıdır!")]
         public string TCNo { get; set; }
 
-        [StringLength(11)]
+        [StringLength(11,ErrorMessage ="Telefon 11 haneli olmalıdır!")]
         public string Telefon { get; set; }
 
         [DataType(DataType.EmailAddress)]
