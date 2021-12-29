@@ -80,6 +80,7 @@ namespace HastaneRandevuEFCF_WinFormUI
                     MessageBox.Show($"{txtDrAd.Text.Trim()} {txtDrSoyad.Text.Trim()} sisteme yeni doktorumuz olarak eklenmiştir.");
                     DrEkleSayfasiTemizle();
                     DrGrideVerileriGetir();
+
                 }
             }
             catch (Exception ex)
@@ -98,7 +99,7 @@ namespace HastaneRandevuEFCF_WinFormUI
             txtDrAd.Clear();
             txtDrSoyad.Clear();
             txtDrTc.Clear();
-            txtDrTc.Clear();
+            txtDrEmail.Clear();
             comboBoxDrBranslar.SelectedIndex = 0;
             maskedTextBoxDrTel.Clear();
         }
@@ -108,6 +109,9 @@ namespace HastaneRandevuEFCF_WinFormUI
             
         }
 
+        private void tabPageDrEkle_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

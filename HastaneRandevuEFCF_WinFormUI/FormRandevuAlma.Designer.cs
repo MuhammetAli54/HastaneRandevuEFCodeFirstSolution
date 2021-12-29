@@ -32,6 +32,8 @@ namespace HastaneRandevuEFCF_WinFormUI
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageRandevuIslem = new System.Windows.Forms.TabPage();
             this.groupBoxRandevu = new System.Windows.Forms.GroupBox();
+            this.btnrandevuyuAl = new System.Windows.Forms.Button();
+            this.UC_RandevuSaat1 = new HastaneRandevuEFCF_WinFormUI.UC_RandevuSaat();
             this.label4 = new System.Windows.Forms.Label();
             this.dateTimePickerRandevuTarihi = new System.Windows.Forms.DateTimePicker();
             this.groupBoxServis = new System.Windows.Forms.GroupBox();
@@ -44,11 +46,15 @@ namespace HastaneRandevuEFCF_WinFormUI
             this.label1 = new System.Windows.Forms.Label();
             this.txtHastaTCArama = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label5 = new System.Windows.Forms.Label();
+            this.comboBoxCiktiDoktorSec = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPageRandevuIslem.SuspendLayout();
             this.groupBoxRandevu.SuspendLayout();
             this.groupBoxServis.SuspendLayout();
             this.groupBoxHasta.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -76,6 +82,8 @@ namespace HastaneRandevuEFCF_WinFormUI
             // 
             // groupBoxRandevu
             // 
+            this.groupBoxRandevu.Controls.Add(this.btnrandevuyuAl);
+            this.groupBoxRandevu.Controls.Add(this.UC_RandevuSaat1);
             this.groupBoxRandevu.Controls.Add(this.label4);
             this.groupBoxRandevu.Controls.Add(this.dateTimePickerRandevuTarihi);
             this.groupBoxRandevu.Location = new System.Drawing.Point(807, 22);
@@ -84,6 +92,29 @@ namespace HastaneRandevuEFCF_WinFormUI
             this.groupBoxRandevu.TabIndex = 1;
             this.groupBoxRandevu.TabStop = false;
             this.groupBoxRandevu.Text = "RANDEVU TARİH VE SAAT İŞLEMLERİ";
+            // 
+            // btnrandevuyuAl
+            // 
+            this.btnrandevuyuAl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnrandevuyuAl.Location = new System.Drawing.Point(65, 320);
+            this.btnrandevuyuAl.Name = "btnrandevuyuAl";
+            this.btnrandevuyuAl.Size = new System.Drawing.Size(310, 50);
+            this.btnrandevuyuAl.TabIndex = 3;
+            this.btnrandevuyuAl.Text = "RANDEVU AL";
+            this.btnrandevuyuAl.UseVisualStyleBackColor = true;
+            this.btnrandevuyuAl.Click += new System.EventHandler(this.btnrandevuyuAl_Click);
+            // 
+            // UC_RandevuSaat1
+            // 
+            this.UC_RandevuSaat1.BackColor = System.Drawing.Color.AntiqueWhite;
+            this.UC_RandevuSaat1.DisaridanGelenTarih = new System.DateTime(2021, 12, 29, 10, 12, 5, 749);
+            this.UC_RandevuSaat1.Doktorum = null;
+            this.UC_RandevuSaat1.Location = new System.Drawing.Point(23, 100);
+            this.UC_RandevuSaat1.Name = "UC_RandevuSaat1";
+            this.UC_RandevuSaat1.RandevuAlmaAktifMi = false;
+            this.UC_RandevuSaat1.SecilenRandevuTarihi = new System.DateTime(((long)(0)));
+            this.UC_RandevuSaat1.Size = new System.Drawing.Size(380, 214);
+            this.UC_RandevuSaat1.TabIndex = 2;
             // 
             // label4
             // 
@@ -96,6 +127,7 @@ namespace HastaneRandevuEFCF_WinFormUI
             // 
             // dateTimePickerRandevuTarihi
             // 
+            this.dateTimePickerRandevuTarihi.CalendarMonthBackground = System.Drawing.Color.AntiqueWhite;
             this.dateTimePickerRandevuTarihi.Location = new System.Drawing.Point(159, 42);
             this.dateTimePickerRandevuTarihi.Name = "dateTimePickerRandevuTarihi";
             this.dateTimePickerRandevuTarihi.Size = new System.Drawing.Size(264, 22);
@@ -197,6 +229,9 @@ namespace HastaneRandevuEFCF_WinFormUI
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.button1);
+            this.tabPage2.Controls.Add(this.comboBoxCiktiDoktorSec);
+            this.tabPage2.Controls.Add(this.label5);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -204,6 +239,32 @@ namespace HastaneRandevuEFCF_WinFormUI
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(8, 32);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(128, 17);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "DOKTOR SEÇİNİZ:";
+            // 
+            // comboBoxCiktiDoktorSec
+            // 
+            this.comboBoxCiktiDoktorSec.FormattingEnabled = true;
+            this.comboBoxCiktiDoktorSec.Location = new System.Drawing.Point(142, 32);
+            this.comboBoxCiktiDoktorSec.Name = "comboBoxCiktiDoktorSec";
+            this.comboBoxCiktiDoktorSec.Size = new System.Drawing.Size(351, 24);
+            this.comboBoxCiktiDoktorSec.TabIndex = 1;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(541, 32);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(200, 46);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // FormRandevuAlma
             // 
@@ -223,6 +284,8 @@ namespace HastaneRandevuEFCF_WinFormUI
             this.groupBoxServis.PerformLayout();
             this.groupBoxHasta.ResumeLayout(false);
             this.groupBoxHasta.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -244,5 +307,10 @@ namespace HastaneRandevuEFCF_WinFormUI
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DateTimePicker dateTimePickerRandevuTarihi;
+        private UC_RandevuSaat UC_RandevuSaat1;
+        private System.Windows.Forms.Button btnrandevuyuAl;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox comboBoxCiktiDoktorSec;
+        private System.Windows.Forms.Label label5;
     }
 }

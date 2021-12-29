@@ -106,9 +106,10 @@ namespace HastaneRandevuEFCF_WinFormUI
             this.tabPageDrEkle.Location = new System.Drawing.Point(4, 25);
             this.tabPageDrEkle.Name = "tabPageDrEkle";
             this.tabPageDrEkle.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDrEkle.Size = new System.Drawing.Size(781, 503);
+            this.tabPageDrEkle.Size = new System.Drawing.Size(1035, 610);
             this.tabPageDrEkle.TabIndex = 1;
             this.tabPageDrEkle.Text = "Dr Ekle";
+            this.tabPageDrEkle.Click += new System.EventHandler(this.tabPageDrEkle_Click);
             // 
             // maskedTextBoxDrTel
             // 

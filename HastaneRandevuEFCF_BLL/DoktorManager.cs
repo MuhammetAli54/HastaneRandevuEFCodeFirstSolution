@@ -56,5 +56,18 @@ namespace HastaneRandevuEFCF_BLL
                 throw ex;
             }
         }
+
+        public Doktor DoktoruIdNoyaGoreBul(int id)
+        {
+            try
+            {
+                Doktor dr = myDBContext.Doktorlar.FirstOrDefault(x => x.DoktorId == id);
+                return dr;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

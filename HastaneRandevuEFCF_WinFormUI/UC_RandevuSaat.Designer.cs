@@ -58,6 +58,7 @@ namespace HastaneRandevuEFCF_WinFormUI
             // 
             // comboBoxSaatler
             // 
+            this.comboBoxSaatler.BackColor = System.Drawing.Color.AntiqueWhite;
             this.comboBoxSaatler.FormattingEnabled = true;
             this.comboBoxSaatler.Location = new System.Drawing.Point(3, 23);
             this.comboBoxSaatler.Name = "comboBoxSaatler";
