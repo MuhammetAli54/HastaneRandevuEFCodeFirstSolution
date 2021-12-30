@@ -43,6 +43,9 @@ namespace HastaneRandevuEFCF_WinFormUI
             }
             Doktorum = null;
             DrveTrheGoreButonlarinAktifPasifIslemleriniYap();
+
+            timer1.Interval = 10;
+            timer1.Enabled = true;
         }
 
 
@@ -50,6 +53,7 @@ namespace HastaneRandevuEFCF_WinFormUI
         {
             try
             {
+                GecmisSaatlerinButonlariniPasiflestir();
                 if (Doktorum == null)
                 {
                     RandevuButonlariniPasiflestir();
@@ -196,6 +200,44 @@ namespace HastaneRandevuEFCF_WinFormUI
             RandevuButonlarinIsimleriniTemizle();
             RandevuButonlariniPasiflestir();
             RandevuAlmaAktifMi = false;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            GecmisSaatlerinButonlariniPasiflestir();
+        }
+
+        private void GecmisSaatlerinButonlariniPasiflestir()
+        {
+            foreach (Button btnitem in tableLayoutPanelRandevuButonlar.Controls)
+            {
+                int dakika = 0;
+                int saat = 0;
+                if (btnitem.Text.Length > 3)
+                {
+                    int.TryParse(btnitem.Text.Substring(3, 2), out dakika);
+                    int.TryParse(btnitem.Text.Substring(0, 2), out saat);
+                }
+
+                
+                if (DisaridanGelenTarih.ToShortDateString() == DateTime.Now.ToShortDateString())
+                {
+                    if (saat < DateTime.Now.Hour)
+                    {
+                        btnitem.BackColor = Color.DarkGray;
+                        btnitem.Enabled = false;
+                    }
+                    else if (saat == DateTime.Now.Hour)
+                    {
+                        if (dakika <= DateTime.Now.Minute)
+                        {
+                            btnitem.BackColor = Color.DarkGray;
+                            btnitem.Enabled = false;
+                        }
+                    }
+                }
+            }
+
         }
     }
 }

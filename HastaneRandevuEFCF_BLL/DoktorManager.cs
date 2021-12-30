@@ -37,7 +37,7 @@ namespace HastaneRandevuEFCF_BLL
             try
             {
                 //where ile sadece aktifler çekilecek
-                return myDBContext.Doktorlar.ToList();
+                return myDBContext.Doktorlar.Where(x=> x.AktifMi).ToList();
             }
             catch (Exception ex)
             {

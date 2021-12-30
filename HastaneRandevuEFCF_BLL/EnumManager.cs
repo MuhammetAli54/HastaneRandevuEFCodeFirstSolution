@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HastaneRandevuEFCF_BLL
 {
-   public static class EnumManager
+    public static class EnumManager
     {
         public static List<Enums> TumBranslariGetir()
         {
@@ -22,8 +22,38 @@ namespace HastaneRandevuEFCF_BLL
                 data.Add(theEnum);
             }
 
-          return data;
+            return data;
         }
-  
+
+        public static string BransiTurkceStringOlarakVer(Branslar brans)
+        {
+            string bransString = "";
+
+            switch (brans)
+            {
+                case Branslar.BransYok:
+                    bransString = "Genel Cerrahi";
+                    break;
+                case Branslar.Dahiliye:
+                    bransString = "Dahiliye";
+                    break;
+                case Branslar.KBB:
+                    bransString = "KBB";
+                    break;
+                case Branslar.GozHastaliklari:
+                    bransString = "Göz Hastalıkları";
+                    break;
+                case Branslar.Ortopedi:
+                    bransString = "Ortopedi";
+                    break;
+                case Branslar.Kardiyoloji:
+                    bransString = "Kardiyoloji";
+                    break;
+                default:
+                    bransString = "Genel";
+                    break;
+            }
+            return bransString;
+        }
     }
 }

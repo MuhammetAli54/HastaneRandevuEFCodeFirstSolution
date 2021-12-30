@@ -32,6 +32,8 @@ namespace HastaneRandevuEFCF_Entities
         [Display(Name = "Maaş")]
         public decimal Maas { get; set; }
 
+        //sonradan ekledik
+        public bool AktifMi { get; set; }
         public virtual List<RandevuBilgileri> RandevuBilgileriList { get; set; }
         public override string ToString()
         {

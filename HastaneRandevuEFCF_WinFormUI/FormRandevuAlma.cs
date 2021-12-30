@@ -30,7 +30,17 @@ namespace HastaneRandevuEFCF_WinFormUI
             HastaListBoxiniDoldur();
             //datetimepicker'ı formatla
             DateTimePickeriAyarla(DateTime.Now);
-           
+
+            //comboCiktiAl
+            DoktorlariComboBoxCiktiAlDrSeceDoldur();
+
+        }
+
+        private void DoktorlariComboBoxCiktiAlDrSeceDoldur()
+        {
+            comboBoxCiktiAlDrSec.DisplayMember = "DoktorAdi" + "DoktorSoyadi";
+            comboBoxCiktiAlDrSec.ValueMember = "DoktorId";
+            comboBoxCiktiAlDrSec.DataSource = doktorManagerim.TumAktifDoktorlariGetir();
         }
 
         private void DateTimePickeriAyarla(DateTime trh)
@@ -39,7 +49,13 @@ namespace HastaneRandevuEFCF_WinFormUI
             dateTimePickerRandevuTarihi.CustomFormat = "dd.MM.yyyy";
             dateTimePickerRandevuTarihi.MinDate = trh;
             dateTimePickerRandevuTarihi.MaxDate = dateTimePickerRandevuTarihi.MinDate.AddDays(15);
-            dateTimePickerRandevuTarihi.Value =trh;
+            dateTimePickerRandevuTarihi.Value = trh;
+            ////
+            dateTimePickerCikti.Format = DateTimePickerFormat.Custom;
+            dateTimePickerCikti.CustomFormat = "dd.MM.yyyy";
+            dateTimePickerCikti.MinDate = DateTime.Now;
+            dateTimePickerCikti.MaxDate = dateTimePickerCikti.MinDate.AddDays(15);
+            dateTimePickerCikti.Value = DateTime.Now;
         }
 
         private void HastaListBoxiniDoldur()
@@ -133,7 +149,7 @@ namespace HastaneRandevuEFCF_WinFormUI
             {
                 RandevuTarihveSaatGroupBoxiniAktiflestir();
                 Doktor seciliDr = listBoxDoktorlar.SelectedItem as Doktor;
-                UC_RandevuSaat1.Doktorum =seciliDr;
+                UC_RandevuSaat1.Doktorum = seciliDr;
             }
             else
             {
@@ -153,12 +169,12 @@ namespace HastaneRandevuEFCF_WinFormUI
         {
             try
             {
-                if (listBoxHastalar.SelectedIndex<0)
+                if (listBoxHastalar.SelectedIndex < 0)
                 {
                     MessageBox.Show("Hasta seçmeden randevu işlemleri yapılamaz!");
                     return;
                 }
-                if (listBoxDoktorlar.SelectedIndex<0)
+                if (listBoxDoktorlar.SelectedIndex < 0)
                 {
                     throw new Exception("Doktor seçmeden randevu işlemleri yapılamaz!");
                 }
@@ -171,7 +187,7 @@ namespace HastaneRandevuEFCF_WinFormUI
                 Hasta secilenHasta = listBoxHastalar.SelectedItem as Hasta;
 
                 //Dikkat etmek gerekir (SecilenRandevuTarihi) !!!!!
-                if (randevuManagerim.HastaninSecilenTarihveSaatteRandevusuVarMi(secilenHasta,UC_RandevuSaat1.SecilenRandevuTarihi))
+                if (randevuManagerim.HastaninSecilenTarihveSaatteRandevusuVarMi(secilenHasta, UC_RandevuSaat1.SecilenRandevuTarihi))
                 {
                     MessageBox.Show($"DİKKAT:{UC_RandevuSaat1.SecilenRandevuTarihi.ToString("dd.MM.yyyy HH:mm:ss")} tarihinde başka bir randevunuz vardır. Bu nedenle aynı saate randevu alamazsınız!", "UYARI!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     return;
@@ -180,15 +196,18 @@ namespace HastaneRandevuEFCF_WinFormUI
                 Doktor secilenDoktor = listBoxDoktorlar.SelectedItem as Doktor;
                 RandevuBilgileri yeniRandevu = new RandevuBilgileri()
                 {
-                    HastaId=secilenHasta.HastaId,
-                    DoktorId=secilenDoktor.DoktorId,
-                    RandevuTarihi=UC_RandevuSaat1.SecilenRandevuTarihi
+                    HastaId = secilenHasta.HastaId,
+                    DoktorId = secilenDoktor.DoktorId,
+                    RandevuTarihi = UC_RandevuSaat1.SecilenRandevuTarihi
                 };
                 bool rndAlindiMi = false;
                 rndAlindiMi = randevuManagerim.RandevuyuAl(yeniRandevu);
                 if (rndAlindiMi)
                 {
-                    MessageBox.Show("RANDEVUNUZ ALINMIŞTIR","BİLGİ",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    MessageBox.Show("RANDEVUNUZ ALINMIŞTIR", "BİLGİ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //Alınan randevuyu listView'e ekleyelim
+                    ListVieweRandevuyuEkle(yeniRandevu);
+
                     //temizlik
                     UC_RandevuSaat1.Temizle();
                     //dateTimePickerRandevuTarihi.Value = DateTime.Now;
@@ -205,10 +224,158 @@ namespace HastaneRandevuEFCF_WinFormUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show("HATA: "+ex.Message);
+                MessageBox.Show("HATA: " + ex.Message);
             }
         }
 
+        private void ListVieweRandevuyuEkle(RandevuBilgileri yeniRandevu)
+        {
+            RandevuBilgileriViewModel randevu = randevuManagerim.RandevuyuViewMoedeleAktar(yeniRandevu);
+            ListViewItem li = new ListViewItem();
+            li.Text = randevu.Servis;
+            li.SubItems.Add(randevu.DoktorAdSoyad);
+            li.SubItems.Add(randevu.HastaAdSoyad);
+            li.SubItems.Add(randevu.RandevuTarihi.ToString("dd.MM.yyyy HH:mm"));
+            li.Tag = randevu;
+            listViewAlinanRandevular.Items.Add(li);
+        }
 
+        private void tabControl1_Click(object sender, EventArgs e)
+        {
+            //temizlik randevu al
+            UC_RandevuSaat1.Temizle();
+            RandevuTarihveSaatGroupBoxiniPasiflestir();
+            comboBoxServis.SelectedIndex = -1;
+            listBoxDoktorlar.SelectedIndex = -1;
+            txtHastaTCArama.Clear();
+            ServisGroupBoxiniPasiflestir();
+            listBoxHastalar.SelectedIndex = -1;
+            dateTimePickerRandevuTarihi.Value = DateTime.Now;
+            //temizlik çıktı al
+            btnCiktiAl.Enabled = false;
+            dateTimePickerCikti.Value = DateTime.Now;
+            comboBoxCiktiAlDrSec.SelectedIndex = 0;
+        }
+
+        private void comboBoxCiktiAlDrSec_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (comboBoxCiktiAlDrSec.SelectedIndex < 0)
+                {
+                    throw new Exception("Lütfen doktor seçiniz!");
+                }
+                Doktor secilenDr = doktorManagerim.DoktoruIdNoyaGoreBul((int)comboBoxCiktiAlDrSec.SelectedValue);
+                CiktiAlButonuAktifPasifliginiAyarla(secilenDr, dateTimePickerCikti.Value);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("HATA: " + ex.Message);
+            }
+        }
+
+        private void CiktiAlButonuAktifPasifliginiAyarla(Doktor dr, DateTime tarih)
+        {
+            btnCiktiAl.Enabled = false;
+            btnCiktiAl.BackColor = SystemColors.Control;
+            if (dr != null)
+            {
+                List<RandevuBilgileri> rndList = randevuManagerim.DoktorunRandevulariniTariheGoreGetir(dr, tarih);
+                if (rndList.Count > 0)
+                {
+                    btnCiktiAl.Enabled = true;
+                    btnCiktiAl.BackColor = Color.Aquamarine;
+                }
+                else
+                {
+                    MessageBox.Show($"Sayın {dr.ToString()}, {tarih.ToString("dd.MM.yyyy")} tarihinde randevunuz bulunmamaktadır!", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void dateTimePickerCikti_ValueChanged(object sender, EventArgs e)
+        {
+            if (comboBoxCiktiAlDrSec.SelectedIndex > 0)
+            {
+                Doktor secilenDr = doktorManagerim.DoktoruIdNoyaGoreBul((int)comboBoxCiktiAlDrSec.SelectedValue);
+                CiktiAlButonuAktifPasifliginiAyarla(secilenDr, dateTimePickerCikti.Value);
+            }
+            else
+            {
+                // MessageBox.Show("Lütfen doktor seçiniz!");
+            }
+        }
+
+        private void btnCiktiAl_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                printDocument1.Print();
+                btnCiktiAl.BackColor = SystemColors.Control;
+                btnCiktiAl.Enabled = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("HATA: " + ex.Message);
+            }
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            try
+            {
+                Doktor doktorum = doktorManagerim.DoktoruIdNoyaGoreBul((int)comboBoxCiktiAlDrSec.SelectedValue);
+                Bitmap bmp1 = Properties.Resources.doktorRandevularResim1;
+                Image resim1 = bmp1;
+
+                Bitmap bmp2 = Properties.Resources.doktorRandevularResim2;
+                Image resim2 = bmp2;
+
+                e.Graphics.DrawImage(resim1, 25, 25, resim1.Width / 10, resim1.Height / 10);
+                e.Graphics.DrawImage(resim2, 725, 25, resim2.Width / 10, resim2.Height / 10);
+                e.Graphics.DrawString($"{EnumManager.BransiTurkceStringOlarakVer(doktorum.Brans)} Servisi - {doktorum.ToString()} - {dateTimePickerCikti.Value.ToString("dd.MM.yyyy")} tarihine ait randevular ", new Font("Arial", 10, FontStyle.Bold), Brushes.Black, new Point(25, 100));
+                e.Graphics.DrawLine(new Pen(Color.Blue, 2), new Point(25, 150), new Point(800, 150));
+                e.Graphics.DrawString("Tarih ve Saat", new Font("Arial", 10, FontStyle.Bold), Brushes.Black, new Point(50, 200));
+                e.Graphics.DrawString("Hasta Adı Soyadı", new Font("Arial", 10, FontStyle.Bold), Brushes.Black, new Point(200, 200));
+                e.Graphics.DrawLine(new Pen(Color.Blue, 2), new Point(25, 225), new Point(800, 225));
+
+                Point konumTarih = new Point(50, 235);
+                Point konumHasta = new Point(200, 235);
+                string[] saatler = { "09:00", "09:15", "09:30", "09:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30", "11:45", "13:00", "13:15", "13:30", "13:45", "14:00", "14:15", "14:30", "14:45", "15:00", "15:15", "15:30", "15:45", "16:00", "16:15", "16:30", "16:45" };
+
+                RandevuBilgileri[] siralirandevular = new RandevuBilgileri[saatler.Length];
+                List<RandevuBilgileri> drRandevular = randevuManagerim.DoktorunRandevulariniTariheGoreGetir(doktorum, dateTimePickerCikti.Value);
+
+                foreach (RandevuBilgileri item in drRandevular)
+                {
+                    for (int i = 0; i < saatler.Length; i++)
+                    {
+                        if (saatler[i]==item.RandevuTarihi.ToString("HHH:mm"))
+                        {
+                            siralirandevular[i] = item;
+                        }
+                    }
+                }
+                foreach (RandevuBilgileri item in siralirandevular)
+                {
+                    if (item!=null)
+                    {
+                        konumTarih = new Point(konumTarih.X, konumTarih.Y + 25);
+                        e.Graphics.DrawString($"{item.RandevuTarihi.ToString("dd.MM.yyyy")} - {item.RandevuTarihi.ToString("HH:mm")}",new Font("Arial",10,FontStyle.Regular),Brushes.Black,konumTarih);
+
+                        konumHasta = new Point(konumHasta.X, konumHasta.Y + 25);
+                        e.Graphics.DrawString($"{item.Hasta.HastaAdi} {item.Hasta.HastaSoyadi}", new Font("Arial", 10, FontStyle.Regular), Brushes.Black, konumHasta);
+
+                    }
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("HATA: " + ex.Message);
+            }
+        }
     }
 }
