@@ -21,14 +21,14 @@ namespace HastaneRandevuEFCF_WinFormUI
         {
             //this.Hide();
             FormDoktor frmDr = new FormDoktor();
-            frmDr.Show();
+            frmDr.ShowDialog();
         }
 
         private void btnRandevuIslemleri_Click(object sender, EventArgs e)
         {
             //this.Hide();
             FormRandevuAlma frmRandevu = new FormRandevuAlma();
-            frmRandevu.Show();
+            frmRandevu.ShowDialog();
         }
 
         private void FormGiris_Load(object sender, EventArgs e)
@@ -39,7 +39,7 @@ namespace HastaneRandevuEFCF_WinFormUI
         private void btnHastaCagir_Click(object sender, EventArgs e)
         {
             FormHastaCagir frmHastaCagir = new FormHastaCagir();
-            frmHastaCagir.Show();
+            frmHastaCagir.ShowDialog();
            
         }
     }
